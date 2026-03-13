@@ -1,0 +1,4 @@
+ALTER TABLE apps
+  ADD COLUMN IF NOT EXISTS rate_limit_rps INTEGER NULL,
+  ADD COLUMN IF NOT EXISTS allowed_source_ips TEXT[] NOT NULL DEFAULT '{}',
+  ADD COLUMN IF NOT EXISTS blocked_source_ips TEXT[] NOT NULL DEFAULT '{}';

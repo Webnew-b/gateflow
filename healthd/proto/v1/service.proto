@@ -1,0 +1,121 @@
+syntax = "proto3";
+package gateflow.v1;
+
+option go_package = "client/v1;gateflowv1";
+
+service GateflowService {
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc AddApp(AddAppRequest) returns (AddAppResponse);
+  rpc ApproveApp(ApproveAppRequest) returns (ApproveAppResponse);
+  rpc DisableApp(DisableAppRequest) returns (DisableAppResponse);
+  rpc RouteUpdate(RouteUpdateRequest) returns (RouteUpdateResponse);
+  rpc List(ListRequest) returns (ListResponse);
+  rpc Show(ShowRequest) returns (ShowResponse);
+  rpc NodeList(NodeRequest) returns (NodeResponse);
+}
+
+message LoginRequest {
+  string password = 1;
+  string username = 2;
+}
+
+message LoginResponse {
+  string msg = 1;
+  string session_token = 2;
+  string expire_at = 3;
+}
+
+message AddAppRequest {
+  string app_name = 1;
+  string target_url = 2;
+  string mount_path = 3;
+  string upstream_path = 4;
+  optional string secret = 5;
+
+}
+
+message AddAppResponse{
+  string app_name = 1;
+  string target_url = 2;
+  string secret = 3;
+}
+
+message ApproveAppRequest {
+  string app_identify = 1;
+  string identify_type = 2;
+}
+
+message ApproveAppResponse{
+  string app_id = 1;
+  string app_name = 2;
+  string status = 3; 
+}
+
+
+message DisableAppRequest {
+  string app_identify = 1;
+  string identify_type = 2;
+}
+
+message DisableAppResponse{
+  string app_id = 1;
+  string app_name = 2;
+  string status = 3; 
+}
+
+
+message RouteUpdateRequest {
+  string app_name = 1;
+  string mount_path= 2;
+  string upstream_path = 3;
+}
+
+message RouteUpdateResponse{
+  string app_id = 1;
+  string app_name = 2;
+  string status = 3; 
+  string mount_path= 4;
+  string upstream_path = 5;
+}
+
+message AppList {
+  string app_id = 1;
+  string app_name = 2;
+  string target_url = 3;
+  string mount_path = 4;
+  string upstream_path = 5;
+  string status = 6;
+}
+
+message ListRequest {
+  
+}
+
+message ListResponse {
+  repeated AppList list = 1;
+}
+
+message ShowRequest {
+  string app_identify = 1;
+  string identify_type = 2;
+}
+
+message ShowResponse {
+  AppList app = 1;
+}
+
+message NodeList {
+  string app_id = 1;
+  string app_name = 2;
+  string health_url = 3;
+  string status = 4;
+  string expect_status = 5;
+}
+
+message NodeRequest {
+  
+}
+
+message NodeResponse {
+  repeated NodeList list = 1;
+}

@@ -1,0 +1,27 @@
+# healthd.yaml
+
+# 从 Gateway 拉健康目标列表的 gRPC 地址
+gateway_admin_rpc_endpoint: "127.0.0.1:9000"
+gateway_session_token: "replace-with-login-session-token"
+
+# 任务周期（核心两个周期）
+# - health_check_every：每隔多久对 targets 做一次 HTTP 探测 + UDP 上报
+# - targets_sync_every：每隔多久从 Gateway 重新拉一次 targets 列表（gRPC Pull）
+health_check_every: "10s"
+targets_sync_every: "5m"
+
+# UDP 上报目标（Gateway 的 UDP listener）
+gateway_udp_addr: "127.0.0.1:8123"
+
+# HTTP 探测参数
+http:
+  timeout: "3s"                 # 单次探测超时
+  user_agent: "gateflow-healthd/0.1"
+
+# 并发控制（避免同时探测太多打爆自己或上游）
+concurrency:
+  max_in_flight: 64
+
+# 日志
+log:
+  level: "info"
