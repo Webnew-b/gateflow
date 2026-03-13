@@ -1,3 +1,7 @@
 **/target
 **/.env
 gateflow/docs/
+
+# local dev scripts (untracked)
+gateflow/create_dir.sh
+gateflow/script.hs
